@@ -3,8 +3,8 @@ create your own Apache Spark cluster with Hadoop/HDFS installed.
 
 full blog post...
 
-install java of course sudo apt-get -y install openjdk-8-jdk-headless default-jre
-This must be done on all nodes.
+1. install java of course sudo apt-get -y install openjdk-8-jdk-headless default-jre
+     This must be done on all nodes.
 Install Scala sudo apt install scala
 I have no idea if this must be done on all nodes, I did.
 Setup password-less ssh between all nodes.
