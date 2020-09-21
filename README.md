@@ -4,40 +4,40 @@ create your own Apache Spark cluster with Hadoop/HDFS installed.
 full blog post...
 
 1. install java of course sudo apt-get -y install openjdk-8-jdk-headless default-jre
-     This must be done on all nodes.
-Install Scala sudo apt install scala
-I have no idea if this must be done on all nodes, I did.
-Setup password-less ssh between all nodes.
-sudo apt install openssh-server openssh-client
-create keys ssh-keygen -t rsa -P ""
-move .pub key into each worker nodes ~/.ssh/authorized_keys location.
-sudo vim /etc/hosts
-add lines for master and nodes with name and ip address... something like follows.
-173.255.199.161 master and maybe 198.58.124.54 worker1
-Probably want to install Spark on master and nodes.... wget https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
-unpack tar xvf spark-2.4.3-bin-hadoop2.7.tgz
-move sudo mv spark-2.4.3-bin-hadoop2.7/ /usr/local/spark
-We need to set Spark/Java path etc.... sudo vim ~/.bashrc
-export PATH=/usr/local/spark/bin:$PATH
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export PATH=$JAVA_HOME/bin:$PATH
-source ~/.bashrc
-vim /usr/local/spark/conf/spark-env.sh
-export SPARK_MASTER_HOST=<master-ip   <- fill in your IP address of master node here.
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-modify the ridiculously named file vim /usr/local/spark/conf/slaves
-add names of master and workers from .hosts file above.
-Finally, start Spark.... sh /usr/local/spark/sbin/start-all.sh
+     - This must be done on all nodes.
+2. Install Scala sudo apt install scala        
+     - I have no idea if this must be done on all nodes, I did.
+3. Setup password-less ssh between all nodes.
+     - sudo apt install openssh-server openssh-client
+4. create keys ssh-keygen -t rsa -P ""
+     - move .pub key into each worker nodes ~/.ssh/authorized_keys location.
+5. sudo vim /etc/hosts
+     - add lines for master and nodes with name and ip address... something like follows.
+     - 173.255.199.161 master and maybe 198.58.124.54 worker1
+6. Probably want to install Spark on master and nodes.... wget https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
+     - unpack tar xvf spark-2.4.3-bin-hadoop2.7.tgz
+     - move sudo mv spark-2.4.3-bin-hadoop2.7/ /usr/local/spark
+7. We need to set Spark/Java path etc.... sudo vim ~/.bashrc
+     - export PATH=/usr/local/spark/bin:$PATH
+     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+     - export PATH=$JAVA_HOME/bin:$PATH
+     - source ~/.bashrc
+8. vim /usr/local/spark/conf/spark-env.sh
+     - export SPARK_MASTER_HOST=<master-ip   <- fill in your IP address of master node here.
+     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+9. modify the ridiculously named file vim /usr/local/spark/conf/slaves
+     - add names of master and workers from .hosts file above.
+     - Finally, start Spark.... sh /usr/local/spark/sbin/start-all.sh
 
 
 Hadoop
 
-wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
-tar -xvf hadoop-2.7.3.tar.gz
-mv hadoop-2.7.3  hadoop<
-vim ~/hadoop/etc/hadoop/hadoop-env.sh
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-vim ~/hadoop/etc/hadoop/core-site.xml
+1. wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+     - tar -xvf hadoop-2.7.3.tar.gz
+     - mv hadoop-2.7.3  hadoop<
+2. vim ~/hadoop/etc/hadoop/hadoop-env.sh
+     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+3. vim ~/hadoop/etc/hadoop/core-site.xml
 <configuration>
         <property>
                 <name>fs.default.name</name>
@@ -45,7 +45,7 @@ vim ~/hadoop/etc/hadoop/core-site.xml
         </property>
 </configuration>
 
-vim ~/hadoop/etc/hadoop/hdfs-site.xml
+4. vim ~/hadoop/etc/hadoop/hdfs-site.xml
 <configuration>
         <property>
                 <name>dfs.namenode.name.dir</name>
@@ -61,9 +61,9 @@ vim ~/hadoop/etc/hadoop/hdfs-site.xml
         </property>
 </configuration>
 
-cd ~/hadoop/etc/hadoop 
-    mv mapred-site.xml.template mapred-site.xml
-    sudo vim ~/hadoop/etc/hadoop/mapred-site.xml
+5. cd ~/hadoop/etc/hadoop 
+    - mv mapred-site.xml.template mapred-site.xml
+    - sudo vim ~/hadoop/etc/hadoop/mapred-site.xml
     <configuration>
 <property>
                 <name>mapreduce.framework.name</name>
@@ -84,12 +84,12 @@ cd ~/hadoop/etc/hadoop
 </configuration>
 
 
-vim ~/hadoop/etc/hadoop/slaves
-localhost
-worker1
-worker2
+6. vim ~/hadoop/etc/hadoop/slaves
+     - localhost
+     - worker1
+     - worker2
 
-vim ~/hadoop/etc/hadoop/yarn-site.xml
+7. vim ~/hadoop/etc/hadoop/yarn-site.xml
 <property>
                 <name>yarn.acl.enable</name>
                 <value>0</value>
@@ -117,5 +117,5 @@ vim ~/hadoop/etc/hadoop/yarn-site.xml
 </configuration>
 
 
-sudo vim ~/.bashrc
-export PATH=/home/beach/hadoop/bin:/home/beach/hadoop/sbin:$PATH
+8. sudo vim ~/.bashrc
+     - export PATH=/home/beach/hadoop/bin:/home/beach/hadoop/sbin:$PATH
